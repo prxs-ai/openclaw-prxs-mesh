@@ -1,0 +1,143 @@
+{
+  "id": "prxs-mesh",
+  "name": "PRXS Mesh",
+  "version": "0.1.0",
+  "description": "Connect OpenClaw to a PRXS registry, sync services as tools, and prepare exec plans for approved execution.",
+  "skills": [
+    "./skills"
+  ],
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "registryUrl": {
+        "type": "string",
+        "default": "http://localhost:8080",
+        "description": "Base PRXS registry URL. You can pass host:port and the plugin will append /api/v1."
+      },
+      "prxsNodeBinary": {
+        "type": "string",
+        "default": "./bin/node",
+        "description": "Path to the PRXS Go node binary (cmd/node), used to execute services via the mesh."
+      },
+      "bootstrapMultiaddr": {
+        "type": "string",
+        "default": "",
+        "description": "Optional override for the PRXS registry bootstrap multiaddr. If empty, the plugin fetches /api/v1/registry/info."
+      },
+      "devMode": {
+        "type": "boolean",
+        "default": true,
+        "description": "Pass -dev=true/false to the PRXS node client."
+      },
+      "defaultTopK": {
+        "type": "integer",
+        "default": 5,
+        "minimum": 1,
+        "maximum": 50,
+        "description": "Default k for semantic search."
+      },
+      "cacheTtlSeconds": {
+        "type": "integer",
+        "default": 10,
+        "minimum": 0,
+        "maximum": 3600,
+        "description": "In-memory cache TTL for registry reads."
+      },
+      "autoSyncTools": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true, fetch /services_full on startup and register a tool for each service."
+      },
+      "maxServiceTools": {
+        "type": "integer",
+        "default": 200,
+        "minimum": 0,
+        "maximum": 5000,
+        "description": "Max number of per-service tools to register from the registry."
+      },
+      "toolNamePrefix": {
+        "type": "string",
+        "default": "prxs_",
+        "description": "Prefix for generated tool names."
+      },
+      "execHost": {
+        "type": "string",
+        "enum": ["sandbox", "gateway", "node"],
+        "default": "gateway",
+        "description": "Default exec host to recommend for prepared commands. Use 'gateway' to ensure exec approvals apply."
+      },
+      "execNode": {
+        "type": "string",
+        "default": "",
+        "description": "When execHost is 'node', this sets the target OpenClaw node id/name for prepared exec requests. If empty, OpenClaw must have a default exec node configured."
+      },
+      "execSecurity": {
+        "type": "string",
+        "enum": ["deny", "allowlist", "full"],
+        "default": "allowlist",
+        "description": "Default exec security mode to recommend for prepared commands (gateway/node only)."
+      },
+      "execAsk": {
+        "type": "string",
+        "enum": ["off", "on-miss", "always"],
+        "default": "always",
+        "description": "Default exec approval prompt mode to recommend for prepared commands (gateway/node only)."
+      },
+      "erc8004RpcUrl": {
+        "type": "string",
+        "default": "",
+        "description": "Optional EVM JSON-RPC URL used to verify ERC-8004 agent identities (read-only eth_call)."
+      },
+      "erc8004IdentityRegistry": {
+        "type": "string",
+        "default": "",
+        "description": "Optional ERC-8004 Identity Registry contract address (hex)."
+      },
+      "erc8004VerifyOnPrepare": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, prxs_prepare_call also verifies service.card.agent_id against the ERC-8004 Identity Registry (when configured)."
+      }
+    },
+    "required": []
+  },
+  "uiHints": {
+    "registryUrl": {
+      "label": "Registry URL",
+      "placeholder": "https://registry.example.com:6000"
+    },
+    "prxsNodeBinary": {
+      "label": "PRXS Node Binary",
+      "placeholder": "/absolute/path/to/prxs-node/bin/node"
+    },
+    "bootstrapMultiaddr": {
+      "label": "Bootstrap Multiaddr",
+      "placeholder": "/dns4/registry.example.com/udp/4001/quic-v1/p2p/12D3KooW..."
+    },
+    "execHost": {
+      "label": "Exec Host",
+      "placeholder": "gateway"
+    },
+    "execSecurity": {
+      "label": "Exec Security",
+      "placeholder": "allowlist"
+    },
+    "execAsk": {
+      "label": "Exec Ask",
+      "placeholder": "always"
+    },
+    "execNode": {
+      "label": "Exec Node",
+      "placeholder": "node-id-or-name"
+    },
+    "erc8004RpcUrl": {
+      "label": "ERC-8004 RPC URL",
+      "placeholder": "https://sepolia.base.org"
+    },
+    "erc8004IdentityRegistry": {
+      "label": "ERC-8004 Registry",
+      "placeholder": "0x..."
+    }
+  }
+}

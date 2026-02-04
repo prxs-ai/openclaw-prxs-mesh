@@ -1,0 +1,36 @@
+{
+  "name": "@prxs/openclaw-mesh",
+  "version": "0.1.0",
+  "description": "Connect OpenClaw to PRXS decentralized service mesh - sync services as tools and execute via P2P network",
+  "keywords": [
+    "openclaw",
+    "prxs",
+    "mesh",
+    "p2p",
+    "libp2p",
+    "ai-agents",
+    "decentralized",
+    "erc-8004"
+  ],
+  "author": "PRXS Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/prxs-ai/openclaw-prxs-mesh.git"
+  },
+  "bugs": {
+    "url": "https://github.com/prxs-ai/openclaw-prxs-mesh/issues"
+  },
+  "homepage": "https://github.com/prxs-ai/openclaw-prxs-mesh#readme",
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  },
+  "files": [
+    "index.ts",
+    "openclaw.plugin.json",
+    "skills",
+    "README.md"
+  ]
+}
